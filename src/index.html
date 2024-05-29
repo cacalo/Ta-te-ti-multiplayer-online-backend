@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form id="form">
+    <label for="text">Texto</label>
+    <input type="text" name="text" id="input">
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="messages"></div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  const form = document.getElementById('form');
+  const input = document.getElementById('input');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });
+
+  const messages = document.getElementById('messages');
+  socket.on('chat message', (msg) => {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+</script>
+</html>
