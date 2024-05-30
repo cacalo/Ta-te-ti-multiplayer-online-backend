@@ -55,14 +55,19 @@ io.on('connection', (socket) => {
   });
   socket.on("disconnecting", () => {
     if(socket.rooms.size < 2) return;
-    const salaId = parseInt([...socket.rooms][1].substring(5))
-    const indiceSala = buscarIndiceSala(salaId);
-    //console.log("Avisando a la sala ",salas[indiceSala].sala.id,"que esta abandonada");
-    salas[indiceSala].jugadorAbandono();
-    salas[indiceSala].socket.conn.close()
-    //console.log("Eliminando la sala",indiceSala,salas[indiceSala])
-    salas = salas.filter(sala => sala.sala.id !== salaId);
-    //console.log("Las salas actuales son",salas)
+    try{
+      const salaId = parseInt([...socket.rooms][1].substring(5))
+      const indiceSala = buscarIndiceSala(salaId);
+      //console.log("Avisando a la sala ",salas[indiceSala].sala.id,"que esta abandonada");
+      salas[indiceSala].jugadorAbandono();
+      salas[indiceSala].socket.conn.close()
+      //console.log("Eliminando la sala",indiceSala,salas[indiceSala])
+      salas = salas.filter(sala => sala.sala.id !== salaId);
+      //console.log("Las salas actuales son",salas)
+    } catch(err) {
+      console.warn("No se pudo avisar de abandono al otro jugador, probablemente también se fue de la sala");
+    }
+    
   });
   socket.on("crearSala",(args,callback)=> crearSala(socket,args,callback));
   socket.on("unirseASala",(args,callback)=> unirseASala(socket,args,callback));
@@ -73,7 +78,7 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3000, () => {
-  console.log('server running at http://localhost:3000');
+  console.log('Servidor escuchando en http://localhost:3000');
 });
 
 function constBuscarSalaPublica(callback:Function){
