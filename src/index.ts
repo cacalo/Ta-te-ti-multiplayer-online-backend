@@ -15,21 +15,20 @@ let idSalaFutura = 0;
 
 /** Verifica si puedo entrar a una sala y me une */
 function unirseASala(socket:Socket,args:UnirseASalaArgs,callback:Function){
-  console.log("Viendo si uno a sala",args.salaId)
+  //console.log("Viendo si uno a sala",args.salaId)
   if(!salas.length) {
     return callback({exito:false,mensaje:"Sala inexistente"});
   }
   const salaIndex = salas.findIndex(sala => sala.sala.id == args.salaId);
-  console.log("Buscando la sala veo que tiene el index", salaIndex)
   if(salaIndex === -1) return callback({exito:false, mensaje:"No se encontró la sala "+args.salaId});
   if(salas[salaIndex].sala.jugador1.ip && salas[salaIndex].sala.jugador2.ip){
     return callback({exito:false,mensaje:"Sala llena"});
   }
-  console.log("Agregamos un jugador",args.jugador)
+  //console.log("Agregamos un jugador",args.jugador)
   args.jugador.ip = socket.handshake.address;
   const numeroJugador = !salas[salaIndex].sala.jugador1.nombre ? 1 : 2;
   salas[salaIndex].agregarJugadorAPosicion(args.jugador,numeroJugador);
-  console.log("Uniendo cliente a la sala ",args.salaId.toString())
+  //console.log("Uniendo cliente a la sala ",args.salaId.toString())
   socket.join("sala-"+args.salaId.toString());
   return callback({exito:true ,sala:salas[salaIndex].getSalaAnonimizada()});
   }
@@ -37,12 +36,11 @@ function unirseASala(socket:Socket,args:UnirseASalaArgs,callback:Function){
 
 /** Crea una nueva sala y me une*/
 function crearSala(socket:Socket,args:UnirseASalaArgs, callback:Function){
-  console.log("Creando sala")
   const nuevaSala:Sala = new Sala(idSalaFutura,socket,args.esPrivada);
   idSalaFutura++;
   salas.push(nuevaSala);
   args.salaId = nuevaSala.sala.id;
-  console.log("Sala creada en back",nuevaSala)
+  //console.log("Sala creada en back",nuevaSala)
   return unirseASala(socket,args,callback);
 }
 
@@ -51,7 +49,7 @@ io.on('connection', (socket) => {
   //console.log('Nueva conexión');
   //socket.emit("conexion");
   socket.on('disconnect', () => {
-    console.log('Usuario desconectado');
+    //console.log('Usuario desconectado');
   });
   socket.on("disconnecting", () => {
     if(socket.rooms.size < 2) return;
@@ -89,8 +87,3 @@ function constBuscarSalaPublica(callback:Function){
 }
 
 const buscarIndiceSala = (id:number) => salas.findIndex(sala => sala.sala.id === id);
-const buscarIndiceJugador = (ip:string,sala:SalaJuego) => {
-  if(sala.jugador1.ip === ip) return 1;
-  if(sala.jugador2.ip === ip) return 2;
-  return null;
-};

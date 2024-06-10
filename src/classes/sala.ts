@@ -80,7 +80,6 @@ export class Sala {
         break;
         default:
         // En caso de que alguien gane le doy la victoria
-        //console.log(posicionJugador,this.rondas,this.sala.jugador1.victorias, this.sala.jugador2.victorias)
         if(posicionJugador === 1 ){
           this.sala.jugador1.victorias++;
           this.sala.estado = this.sala.jugador1.victorias === this.rondas ?  "VICTORIA_FINAL_P1" :  "VICTORIA_P1"
@@ -99,7 +98,7 @@ export class Sala {
     this.vaciarTablero();
     this.cambiarJugadorInicial();
     if(this.sala.jugador1.victorias === this.rondas || this.sala.jugador2.victorias === this.rondas) {
-      console.log("HUBO UN GANADOR, REINICANDO")
+      //console.log("HUBO UN GANADOR, REINICANDO")
       this.sala.jugador1.victorias = 0;
       this.sala.jugador2.victorias = 0;
     }
@@ -111,8 +110,6 @@ export class Sala {
   comunicar(posicionJugador:1|2,exito:boolean,args?:any){
     const nombreJugador:string = posicionJugador === 1 ? this.sala.jugador1.nombre : this.sala.jugador2.nombre;
     global.io.to("sala-"+this.sala.id.toString()).emit(exito,[nombreJugador,args])
-    console.log("Comunicando a sala "+this.sala.id.toString(),exito,nombreJugador,args)
-    console.log("los suscriptos son",global.io.sockets.name)
   }
 
   /** Envía el estado de la sala a todos los jugadores de una sala */
