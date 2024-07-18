@@ -1,5 +1,5 @@
-import { Jugador } from "./jugador";
-import { Marca } from "./tablero";
+import { Jugador } from "./jugador.js";
+import { Marca } from "./tablero.js";
 
 export interface SalaJuego {
   id: number,
