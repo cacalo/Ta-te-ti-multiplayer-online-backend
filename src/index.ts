@@ -1,4 +1,5 @@
 import express from 'express';
+import { config } from 'dotenv';
 import { createServer } from 'node:http';
 import { Server, Socket } from 'socket.io';
 import { Sala } from './classes/sala.js';
@@ -8,10 +9,11 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server,{cors:{origin:"*"}});
 global.io = io;
-
+config();
 
 let salas:Sala[] = []
 let idSalaFutura = 0;
+const puerto = process.env.PORT || 3000;
 
 /** Verifica si puedo entrar a una sala y me une */
 function unirseASala(socket:Socket,args:UnirseASalaArgs,callback:Function){
@@ -75,8 +77,8 @@ io.on('connection', (socket) => {
   socket.on("encontrarSala",(callback)=> {constBuscarSalaPublica(callback)});
 });
 
-server.listen(3000, () => {
-  console.log('Servidor escuchando en http://localhost:3000');
+server.listen(puerto, () => {
+  console.log('Servidor escuchando en puerto '+puerto);
 });
 
 function constBuscarSalaPublica(callback:Function){
