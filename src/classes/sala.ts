@@ -109,7 +109,7 @@ export class Sala {
   /** Envía un mensaje por el socket a los jugadores conectados a la sala */
   comunicar(posicionJugador:1|2,exito:boolean,args?:any){
     const nombreJugador:string = posicionJugador === 1 ? this.sala.jugador1.nombre : this.sala.jugador2.nombre;
-    global.io.to("sala-"+this.sala.id.toString()).emit(exito,[nombreJugador,args])
+    global.io.to("sala-"+this.sala.id.toString()).emit(exito?"exito":"",[nombreJugador,args])
   }
 
   /** Envía el estado de la sala a todos los jugadores de una sala */
@@ -118,7 +118,7 @@ export class Sala {
   }
 
   /** Comunica que la acción que el server recibió no se puede ejecutar */
-  comunicarJugadaIlegal(posicionJugador){
+  comunicarJugadaIlegal(posicionJugador:1|2){
     this.comunicar(posicionJugador,false,"Jugada ilegal");
   }
 

@@ -2,7 +2,7 @@ import express from 'express';
 import { createServer } from 'node:http';
 import { Server, Socket } from 'socket.io';
 import { Sala } from './classes/sala';
-import { SalaJuego, UnirseASalaArgs } from './interfaces/salaJuego';
+import { UnirseASalaArgs } from './interfaces/salaJuego';
 
 const app = express();
 const server = createServer(app);
