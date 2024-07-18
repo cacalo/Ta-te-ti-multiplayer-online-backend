@@ -1,4 +1,4 @@
-import express from 'express';
+const express = require('express')
 import { createServer } from 'node:http';
 import { Server, Socket } from 'socket.io';
 import { Sala } from './classes/sala';
