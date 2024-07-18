@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express';
 import { createServer } from 'node:http';
 import { Server, Socket } from 'socket.io';
-import { Sala } from './classes/sala';
-import { UnirseASalaArgs } from './interfaces/salaJuego';
+import { Sala } from './classes/sala.js';
+import { UnirseASalaArgs } from './interfaces/salaJuego.js';
 
 const app = express();
 const server = createServer(app);

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec npx tsx src/index.ts",
     "build": "tsc --build",

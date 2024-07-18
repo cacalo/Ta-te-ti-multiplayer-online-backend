@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
-import { SalaJuego } from "../interfaces/salaJuego";
-import { JUGADOR_VACIO, Jugador } from "../interfaces/jugador";
-import { PosicionTablero } from "../interfaces/tablero";
+import { SalaJuego } from "../interfaces/salaJuego.js";
+import { JUGADOR_VACIO, Jugador } from "../interfaces/jugador.js";
+import { PosicionTablero } from "../interfaces/tablero.js";
 
 /** Clase que maneja las funcionalidades de cada sala de juego */
 export class Sala {
